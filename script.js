@@ -2,21 +2,19 @@
 window.onload = init;
 
 var fw;
-var checkNuage;
 
+//recupère la position su clique de la souris
+function getMouse(event) {
+    let xMouse = event.clientX - fw.getPosXCanvas() + fw.getPosXScroll();
+    let yMouse = event.clientY - fw.getPosYCanvas() + fw.getPosYScroll();
+    fw.checkObject(xMouse, yMouse);
+}
 
 
 function init(){
     fw = new FrameWork();
     fw.init();
 }
-
-//recupère la position su clique de la souris
-    function getMouse(event) {
-        let xMouse = event.clientX - fw.getPosXCanvas() + fw.getPosXScroll();
-        let yMouse = event.clientY - fw.getPosYCanvas() + fw.getPosYScroll();
-        fw.downSoucoupe(xMouse, yMouse);
-    }
 
 function FrameWork(){
 
@@ -217,6 +215,11 @@ function FrameWork(){
     }
 
 
+    function checkObject(xMouse, yMouse) {
+
+    }
+
+
 
     /*Black box model*/
     return {
@@ -230,6 +233,8 @@ function FrameWork(){
         getPosXCanvas,
         getPosYCanvas,
         getPosXScroll,
-        getPosYScroll
+        getPosYScroll,
+        checkObject
+
     }
 }
