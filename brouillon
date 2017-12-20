@@ -1,0 +1,48 @@
+drawChapeau(ctx) {
+        ctx.save();
+        ctx.fillStyle = this.colorChap;
+        ctx.strokeStyle = this.colorChap;
+        ctx.rotate(3.14);
+        ctx.translate(-75, 0);
+        ctx.beginPath();
+        ctx.arc(0, 0, 50, 0, Math.PI);
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore()
+    }
+
+        }
+
+
+         function createCloud(){
+                let couleur = Math.random() * 255;
+                let rgb = "rgb("+couleur+","+couleur+","+couleur+")";
+                let vitesseD = Math.random() * 3;
+                //creation d l'objet nuage
+                let cloud = new Cloud(vitesseD, rgb, w);
+            }
+
+
+
+            //class des nuages
+            class Cloud extends ObjetGraphique {
+                constructor(xVitesse, couleur, w){
+                    super(xVitesse, couleur);
+                    this.x = w;
+                    this.vitesse = xVitesse;
+                }
+
+                draw(ctx, w){
+                    ctx.save();
+                    ctx.fillStyle = this.couleur;
+                    ctx.beginPath();
+                    ctx.arc(w, 10, Math.PI);
+                    ctx.fill();
+                    ctx.restore();
+                }
+
+                move(){
+
+                }
+
+            }

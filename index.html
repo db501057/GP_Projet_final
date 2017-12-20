@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bonhomme animée</title>
+    <link rel="stylesheet" href="cssBonhomme.css" type="text/css">
+
+</head>
+<body>
+
+<script src="extraterrestreScriptObjet.js"></script>
+
+<div id="world">
+
+    <div id="canvasDiv"><canvas id="canvas" width=950 height="600" onclick="getMouse(event)"></canvas></div>
+
+    <div id="gestion">
+
+        <div id="extraterrestre" class="elt">
+            <h2>Extraterrestre</h2>
+
+            <label for="nbExtra">Nombre d'extraterrestre: <span id="extra">0</span></label>
+            <input id="nbExtra" type="range" value="2" min="0" max="7" oninput="createNExtraterreste(this.value)">
+        </div>
+
+
+        <div id="nuage" class="elt">
+            <h2>Nuages</h2>
+
+            <div class="Nuage">
+                <label for="checkCloud">Activation des nuages </label>
+                <input id="checkCloud" type="checkbox" name="nuage" value="" oninput="gereCloud(this.checked)">
+            </div>
+
+            <hr width="75%" color="black">
+
+            <div class="Nuage">
+                <label for="colorCoud">Couleur des nuages</label>
+                <input type="color" name="color" value="#FFFFFF" id="colorCoud" oninput="changeColorCloud(this.value)">
+            </div>
+        </div>
+
+
+        <div id="soucoupe" class="elt">
+            <h2>Soucoupes Volantes</h2>
+
+            <label for="inNBsoucoupe">Nombre de sousoupes volantes: <span id="nbSoucoupe">0</span></label>
+            <input id="inNBsoucoupe" type="range" value="3" min="0" max="20" oninput="createNSoucoupe(this.value)">
+
+            <hr width="75%" color="black">
+
+            <label for="vSoucoupe">Vitesse des soucoupes volantes: <span id="rVitesseS">0</span></label>
+            <input id="vSoucoupe" type="range" value="0" min="-12" max="12" oninput="getSpeedRange(this.value)">
+
+            <hr width="75%" color="black">
+
+            <p>Appuyez sur les soucoupes volantes pour les faire crasher</p>
+        </div>
+
+    </div>
+</div>
+<h1>Benjamin Dekeyser L3 Miage UNS</h1>
+
+
+
+
+<iframe src="https://www.youtube.com/embed/akRvwoq-NXk?autoplay=1&loop=1" hidden></iframe>
+</body>
+</html>
