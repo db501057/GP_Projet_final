@@ -1,9 +1,7 @@
 #canvas {
-    background:url("") no-repeat center;
-    background-size: cover;
     border: 1px solid gray;
-    max-width: 950px;
-    max-height: 600px;
+    max-width: 90%
+    max-height: 400px;
 }
 
 #canvas {
@@ -18,7 +16,7 @@ h1 {
 #canvasDiv {
     border: 1rem solid red;
     box-shadow: lightslategray 2px 2px 2px 2px ;
-    width: 80%;
+    width: 90%;
     display: flex;
     flex-direction: row;
     justify-content: center;

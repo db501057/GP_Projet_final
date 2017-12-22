@@ -1,7 +1,7 @@
 //lorsque que la page est chargé
 window.onload = init;
 
-var fw;
+let fw;
 
 //recupère la position su clique de la souris
 function getMouse(event) {
@@ -19,15 +19,23 @@ function init(){
 function FrameWork(){
 
     let canvas, ctx;          //Les varaible du canvas
-    var h, w;     //les dimension du canvas
+    let h, w;     //les dimension du canvas
     let tabObjectExtraterrestre = [];     //tableau avec tous les objets du canvas
     let tabObjectSoucoupe = [];
-    var speedSoucoupe = 0;      //vitesse en plus des soucoupe volantes
 
     function init(){
         canvas = document.querySelector("#canvas");
         ctx = canvas.getContext("2d");
         getDimCanavs();     //recuperation des dimension du canvas
+
+        var imageObj = new Image();
+
+        imageObj.onload = function() {
+            ctx.drawImage(imageObj, 100, 100, 0, 0);
+        };
+
+        imageObj.src = "fond.jpg";
+
         //animation du canvas
         setInterval(changeColorChap, 10);       //changement de la couleur du chapeau de l'extraterrestre
        // setInterval(colorBrakeSoucoupe, 3);     //chnagem la couleur de la cabine de la soucoupe quand on clique dessus
