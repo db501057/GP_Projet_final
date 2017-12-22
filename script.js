@@ -30,7 +30,8 @@ function FrameWork(){
         getDimCanavs();     //recuperation des dimension du canvas
         //animation du canvas
         setInterval(changeColorChap, 10);       //changement de la couleur du chapeau de l'extraterrestre
-        setInterval(colorBrakeSoucoupe, 3);     //chnagem la couleur de la cabine de la soucoupe quand on clique dessus
+       // setInterval(colorBrakeSoucoupe, 3);     //chnagem la couleur de la cabine de la soucoupe quand on clique dessus
+        createSoucoupe(10);
         requestAnimationFrame(animeCanvas);
 
     }
@@ -157,10 +158,10 @@ function FrameWork(){
         //genere la position y dans le canvas
         function genereY(scale){
             let ppY = Math.random() * h;
-            if(ppY < scale * 60) {
-                return ppY + scale * 60;
-            } else if (ppY > h - scale * 60){
-                return ppY - scale * 60;
+            if(ppY < scale * 100) {
+                return ppY + scale * 100;
+            } else if (ppY > h - scale * 40){
+                return ppY - scale * 40;
             } else  {
                 return ppY;
             }
@@ -218,7 +219,6 @@ function FrameWork(){
     function checkObject(xMouse, yMouse) {
 
     }
-
 
 
     /*Black box model*/

@@ -14,6 +14,7 @@ class Soucoupe extends ObjetGraphique {
     draw(ctx) {
         ctx.save();
         ctx.translate(this.x, this.y);
+
         ctx.scale(this.scale, this.scale);
         ctx.rotate(this.rotation);
         this.soute(ctx);
@@ -24,7 +25,6 @@ class Soucoupe extends ObjetGraphique {
         ctx.fill();
         ctx.stroke();
         this.cabine(ctx);
-
         ctx.restore();
     }
 
@@ -114,7 +114,7 @@ class Soucoupe extends ObjetGraphique {
             }
 
             //colision en y
-            if (this.y > h - this.scale * 40 || this.y <= this.scale * 60) {
+            if (this.y > h - this.scale * 40 || this.y <= this.scale * 100) {
                 this.yVitesse = -this.yVitesse;
             }
         } else if (this.y >= h - this.scale * 40) {
