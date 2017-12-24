@@ -13,13 +13,13 @@ window.addEventListener('keydown', function (event) {
     }
 });
 
-/*//recupère la position su clique de la souris
+//recupère la position su clique de la souris
 function getMouse(event) {
     let xMouse = event.clientX - fw.getPosXCanvas() + fw.getPosXScroll();
     let yMouse = event.clientY - fw.getPosYCanvas() + fw.getPosYScroll();
-    fw.checkObject(xMouse, yMouse);
+    return [xMouse, yMouse];
 }
-*/
+
 
 
 function init(){
@@ -37,6 +37,7 @@ function FrameWork(){
     var imageObj = new Image();
     let lanceur = new Lanceur(10, 550);
     let lose = false;
+    let start = true;
 
     let t = new Missille(100, 100);
     imageObj.src = 'fond.jpg';
@@ -49,9 +50,6 @@ function FrameWork(){
         //animation du canvas
        // setInterval(changeColorChap, 10);       //changement de la couleur du chapeau de l'extraterrestre
        // setInterval(colorBrakeSoucoupe, 3);     //chnagem la couleur de la cabine de la soucoupe quand on clique dessus
-
-        createSoucoupe(1);
-
         requestAnimationFrame(animeCanvas);
     }
 
@@ -78,16 +76,61 @@ function FrameWork(){
 
         ctx.drawImage(imageObj, 0, 0, w, h);
 
+
+        let h2 = h/2;
+        let w2 = w/2;
+
+
         if(lose){
 
-            let h2 = h/2;
-            let w2 = w/2;
 
-            ctx.font = "60pt Calibri";
+
+            tabObjectSoucoupe.forEach(function (s) {
+                s.draw(ctx);
+            });
+
+            ctx.font = "60pt Monaco";
             ctx.lineWidth = 3;
-            ctx.strokeStyle = "purble";
+            ctx.strokeStyle = "blue";
             ctx.fillStyle = "yellow";
-            ctx.fillText("You loose", w2, h2);
+            ctx.fillText("Vous avez perdu", w2, h2 + 50);
+
+        } else if (start) {
+
+            ctx.font = "60pt Monaco";
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "blue";
+            ctx.fillStyle = "purple";
+            ctx.fillText("Lunéar", w2 - 200, 100);
+
+            let w3 = w/3;
+
+            ctx.font = "30pt Monaco";
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "blue";
+            ctx.fillStyle = "blue";
+            ctx.fillText("Facile", 50, 400);
+
+            ctx.font = "30pt Monaco";
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "blue";
+            ctx.fillStyle = "blue";
+            ctx.fillText("Intermédiare", w3, 400);
+
+            ctx.font = "30pt Monaco";
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "blue";
+            ctx.fillStyle = "blue";
+            ctx.fillText("Difficile", w3*2 + 50, 400);
+
+            let res = getMouse();
+
+            let xmouse = res[0];
+            let ymouse = res[1];
+
+            if(xmouse > 50 && xmouse < 150){
+                start = false;
+            }
 
         } else {
 
@@ -104,13 +147,18 @@ function FrameWork(){
                 r.rotationBras();
             });
 
+            let col;
+
             //dessine les soucoupes volantes
             tabObjectSoucoupe.forEach(function (s) {
                 s.draw(ctx);
                 s.move(ctx);
-                s.tryColision(w, h);
+                col = s.tryColision(w, h);
             });
 
+            if(col){
+                lose = true;
+            }
 
             lanceur.draw(ctx);
 
@@ -295,6 +343,10 @@ function FrameWork(){
         getSpeedSoucoupe,
         setVitesse,
         moveLanceur,
-        createMissille
+        createMissille,
+        getPosYScroll,
+        getPosXScroll,
+        getPosYCanvas,
+        getPosXCanvas
     }
 }

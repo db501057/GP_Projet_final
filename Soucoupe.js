@@ -110,9 +110,10 @@ class Soucoupe extends ObjetGraphique {
             //colision en y
             if (this.y > h - this.scale * 70){
                 this.y = h - this.scale * 70;
+                return true;
             }
 
-            lose = true;
+
         /* else if (this.y >= h - this.scale * 40) {
             this.rotation -= .5;
             this.y = h - this.scale * 40;
