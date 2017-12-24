@@ -24,13 +24,13 @@ function getMouse(event) {
 
 setInterval(function () {
     if(facile){
-        fw.createSoucoupe(5)
+        fw.createSoucoupe(2)
     }
     if(intermediare){
-        fw.createSoucoupe(10);
+        fw.createSoucoupe(7);
     }
     if(difficile){
-        fw.createSoucoupe(15);
+        fw.createSoucoupe(13);
     }
 }, 2000);
 
@@ -66,7 +66,7 @@ function FrameWork(){
 
     function mouseClick(){
         tabObjectSoucoupe.forEach(function (s) {
-            if(xMouse >= s.x - 100  * s.scale && xMouse <= s.x + 100 * s.scale && yMouse >= s.y - 100  * s.scale && yMouse <= s.y + 100 * s.scale ){
+            if((xMouse > s.x - 100 * s.scale && xMouse < s.x + 100 * s.scale) && (yMouse >= s.y && yMouse <= s.y)){
                 console.log('ok');
                 s.drawTF = false;
             }
@@ -173,7 +173,7 @@ function FrameWork(){
                 r.rotationBras();
             });
 
-            let colission;
+            let colission = false;
 
             //dessine les soucoupes volantes
             tabObjectSoucoupe.forEach(function (s) {
@@ -182,88 +182,19 @@ function FrameWork(){
                 colission = s.tryColision(w, h);
             });
 
+            console.log(colission);
+
             if(colission){
                 lose = true;
-                console.log('lose');
             }
         }
 
         requestAnimationFrame(animeCanvas);
     }
 
-
-    //colission missile soucoupe
-    function missilleSoucoupe(){
-        tabObjectSoucoupe.forEach(function (s) {
-            tabObjectMissille.forEach(function (m) {
-                console.log(s.y, m.y);
-                if((s.x > m.x && s.x < m.x) && (s.y > m.y && s.y < m.y)){
-                    s.pop();
-                    m.pop();
-                }
-            })
-        })
-    }
-
-    //vide la liste des objets
-    function clearTabE(){
-        tabObjectExtraterrestre = [];
-    }
-
     function clearTabS() {
         tabObjectSoucoupe = [];
     }
-
-    //creer un nombre n d'extraterreste
-    function createExtraterreste(n){
-
-        //genere la position x dans le canvas
-        function genereX(scale){
-            let ppX = Math.random() * w;
-            if(ppX < scale * 85) {
-                return ppX + scale * 85;
-            } else if (ppX > w - scale * 185){
-                return ppX - scale * 185;
-            } else  {
-                return ppX;
-            }
-        }
-
-        //genere la position y dans le canvas
-        function genereY(scale){
-            let ppY = Math.random() * h;
-            if(ppY < scale * 90) {
-                return ppY + scale * 90;
-            } else if (ppY > h - scale * 160){
-                return ppY - scale * 160;
-            } else  {
-                return ppY;
-            }
-        }
-
-        //genere un échelle aléatoire != 0
-        function genereScale(){
-            let ps = Math.random() * 0.7;
-            if (ps == 0){
-                return ps + 0.1
-            } else {
-                return ps;
-            }
-        }
-
-        //genere les n objets extraterrestres
-        for(i = 0; i < n; i++){
-            let scale = genereScale();      //genere un échelle au hasard
-            let posX = Math.floor(genereX(scale));       //position x
-            let posY = Math.floor(genereY(scale));       //position y
-            let vitX = Math.random() * 2;
-            let vitY = Math.random() * 2;
-            let e = new Extraterrestre(posX, posY, vitX, vitY, scale);
-            tabObjectExtraterrestre.push(e);
-        }
-
-    }
-
 
     //creer n soucoupes volante
     function createSoucoupe(n){
@@ -316,33 +247,27 @@ function FrameWork(){
 
     }
 
+    /*gestion souris canvas*/
+    {
+        //retorune la position x du canvas dans la page HTML
+        function getPosXCanvas() {
+            return canvas.offsetLeft;
+        }
 
-    /*creer les missile lancer*/
-    function createMissille(){
-        let posX = lanceur.x + 7.5;
-        let posY = lanceur.y;
-        let missille = new Missille(posX, posY);
-        tabObjectMissille.push(missille);
-    }
+        //retorune la position y du canavs dans la page html
+        function getPosYCanvas() {
+            return canvas.offsetTop;
+        }
 
+        //renvoye les coordonée du scroll
+        function getPosXScroll() {
+            return window.scrollX;
+        }
 
-    //retorune la position x du canvas dans la page HTML
-    function getPosXCanvas(){
-        return canvas.offsetLeft;
-    }
+        function getPosYScroll() {
+            return window.scrollY;
+        }
 
-    //retorune la position y du canavs dans la page html
-    function getPosYCanvas(){
-        return canvas.offsetTop;
-    }
-
-    //renvoye les coordonée du scroll
-    function getPosXScroll(){
-        return window.scrollX;
-    }
-
-    function getPosYScroll(){
-        return window.scrollY;
     }
 
     /*Black box model*/
