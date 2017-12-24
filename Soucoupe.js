@@ -111,6 +111,8 @@ class Soucoupe extends ObjetGraphique {
             if (this.y > h - this.scale * 70){
                 this.y = h - this.scale * 70;
             }
+
+            lose = true;
         /* else if (this.y >= h - this.scale * 40) {
             this.rotation -= .5;
             this.y = h - this.scale * 40;

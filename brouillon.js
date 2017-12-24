@@ -74,3 +74,17 @@ function getSpeedRange(speedM) {
     fw.moreSpeed(newVitesse);
     document.querySelector("#rVitesseS").innerHTML = speedM;
 }
+
+
+
+//change la couleur du chapeau
+function changeColorChap() {
+    tabObjectExtraterrestre.forEach(function (e){
+        if (e.colorChap === 'white') {
+            e.colorChap = 'red';
+        } else if (e.colorChap === 'red') {
+            e.colorChap = 'white';
+        }
+    });
+}
+

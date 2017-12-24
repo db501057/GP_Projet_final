@@ -15,7 +15,7 @@ class Missille extends ObjetGraphique {
 
 
     move(){
-        this.y -= 1;
+        this.y -= 5;
     }
 
 

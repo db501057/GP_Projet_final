@@ -36,6 +36,7 @@ function FrameWork(){
     let tabObjectMissille = [];
     var imageObj = new Image();
     let lanceur = new Lanceur(10, 550);
+    let lose = false;
 
     let t = new Missille(100, 100);
     imageObj.src = 'fond.jpg';
@@ -48,7 +49,9 @@ function FrameWork(){
         //animation du canvas
        // setInterval(changeColorChap, 10);       //changement de la couleur du chapeau de l'extraterrestre
        // setInterval(colorBrakeSoucoupe, 3);     //chnagem la couleur de la cabine de la soucoupe quand on clique dessus
-        
+
+        createSoucoupe(1);
+
         requestAnimationFrame(animeCanvas);
     }
 
@@ -75,41 +78,60 @@ function FrameWork(){
 
         ctx.drawImage(imageObj, 0, 0, w, h);
 
-        tabObjectMissille.forEach(function (m) {
-            m.draw(ctx);
-            m.move();
+        if(lose){
+
+            let h2 = h/2;
+            let w2 = w/2;
+
+            ctx.font = "60pt Calibri";
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "purble";
+            ctx.fillStyle = "yellow";
+            ctx.fillText("You loose", w2, h2);
+
+        } else {
+
+            tabObjectMissille.forEach(function (m) {
+                m.draw(ctx);
+                m.move();
+            });
+
+
+            tabObjectExtraterrestre.forEach(function (r) {
+                r.draw(ctx);
+                r.move();
+                r.tryColision(w, h);
+                r.rotationBras();
+            });
+
+            //dessine les soucoupes volantes
+            tabObjectSoucoupe.forEach(function (s) {
+                s.draw(ctx);
+                s.move(ctx);
+                s.tryColision(w, h);
+            });
+
+
+            lanceur.draw(ctx);
+
+            missilleSoucoupe();
+
+            requestAnimationFrame(animeCanvas);
+        }
+    }
+
+    //colission missile soucoupe
+    function missilleSoucoupe(){
+        tabObjectSoucoupe.forEach(function (s) {
+            tabObjectMissille.forEach(function (m) {
+                console.log(s.y, m.y);
+                if(s.y == m.y && (s.x > m.x - s.x - 100 * s.scale && s.x < m.x + s.x - 100 *s.scale)){
+                    s.pop();
+                    m.pop();
+                }
+            })
         })
-
-        lanceur.draw(ctx);
-
-        tabObjectExtraterrestre.forEach(function(r){
-            r.draw(ctx);
-            r.move();
-            r.tryColision(w, h);
-            r.rotationBras();
-        });
-
-        //dessine les soucoupes volantes
-        tabObjectSoucoupe.forEach(function(s){
-            s.draw(ctx);
-            s.move(ctx);
-            s.tryColision(w, h);
-        });
-
-        requestAnimationFrame(animeCanvas);
     }
-
-    //change la couleur du chapeau
-    function changeColorChap() {
-        tabObjectExtraterrestre.forEach(function (e){
-            if (e.colorChap === 'white') {
-                e.colorChap = 'red';
-            } else if (e.colorChap === 'red') {
-                e.colorChap = 'white';
-            }
-        });
-    }
-
 
     //vide la liste des objets
     function clearTabE(){
