@@ -97,30 +97,24 @@ class Soucoupe extends ObjetGraphique {
                     this.y = this.y + this.yVitesse;
                 }
                 */
-        if (this.touch) {
-            this.rotation += .5;
-            this.y += 15;
-        } else {
-            this.x += this.xVitesse;
+
             this.y += this.yVitesse;
-        }
     }
 
     tryColision(w, h) {
         //collision en x
-        if (!this.touch) {
             if (this.x >= w - this.scale * 100 || this.x <= this.scale * 100) {
                 this.xVitesse = -this.xVitesse;
             }
 
             //colision en y
-            if (this.y > h - this.scale * 40 || this.y <= this.scale * 100) {
-                this.yVitesse = -this.yVitesse;
+            if (this.y > h - this.scale * 70){
+                this.y = h - this.scale * 70;
             }
-        } else if (this.y >= h - this.scale * 40) {
+        /* else if (this.y >= h - this.scale * 40) {
             this.rotation -= .5;
             this.y = h - this.scale * 40;
-        }
+        }*/
     }
 }
 

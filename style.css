@@ -1,6 +1,6 @@
 #canvas {
     border: 1px solid gray;
-    max-width: 90%
+    width: 1000px;
     max-height: 400px;
 }
 

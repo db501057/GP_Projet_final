@@ -3,12 +3,21 @@ window.onload = init;
 
 let fw;
 
-//recupère la position su clique de la souris
+window.addEventListener('keydown', function (event) {
+    if(event.keyCode == 37){
+        fw.moveLanceur(37);
+    } else if (event.keyCode === 39){
+        fw.moveLanceur(39);
+    }
+});
+
+/*//recupère la position su clique de la souris
 function getMouse(event) {
     let xMouse = event.clientX - fw.getPosXCanvas() + fw.getPosXScroll();
     let yMouse = event.clientY - fw.getPosYCanvas() + fw.getPosYScroll();
     fw.checkObject(xMouse, yMouse);
 }
+*/
 
 
 function init(){
@@ -22,26 +31,28 @@ function FrameWork(){
     let h, w;     //les dimension du canvas
     let tabObjectExtraterrestre = [];     //tableau avec tous les objets du canvas
     let tabObjectSoucoupe = [];
+    var imageObj = new Image();
+    let lanceur = new Lanceur(10, 550);
+    imageObj.src = 'fond.jpg';
 
     function init(){
         canvas = document.querySelector("#canvas");
         ctx = canvas.getContext("2d");
         getDimCanavs();     //recuperation des dimension du canvas
 
-        var imageObj = new Image();
-
-        imageObj.onload = function() {
-            ctx.drawImage(imageObj, 100, 100, 0, 0);
-        };
-
-        imageObj.src = "fond.jpg";
+        createSoucoupe(1);
 
         //animation du canvas
-        setInterval(changeColorChap, 10);       //changement de la couleur du chapeau de l'extraterrestre
+       // setInterval(changeColorChap, 10);       //changement de la couleur du chapeau de l'extraterrestre
        // setInterval(colorBrakeSoucoupe, 3);     //chnagem la couleur de la cabine de la soucoupe quand on clique dessus
-        createSoucoupe(10);
+        
         requestAnimationFrame(animeCanvas);
 
+    }
+
+
+    function moveLanceur(key) {
+        lanceur.move(key);
     }
 
     //renvoie la valeur de la vitesse des soucoupe précédente
@@ -59,6 +70,12 @@ function FrameWork(){
     function animeCanvas(){
         getDimCanavs();      //on verifie les dimension du canvas
         ctx.clearRect(0, 0, w, h);
+
+        ctx.drawImage(imageObj, 0, 0, w, h);
+
+        lanceur.draw(ctx);
+
+
         tabObjectExtraterrestre.forEach(function(r){
             r.draw(ctx);
             r.move();
@@ -150,7 +167,6 @@ function FrameWork(){
 
     //creer n soucoupes volante
     function createSoucoupe(n){
-
         //genere la position x dans le canvas
         function genereX(scale){
             let ppX = Math.random() * w;
@@ -163,6 +179,8 @@ function FrameWork(){
             }
         }
 
+        /*
+
         //genere la position y dans le canvas
         function genereY(scale){
             let ppY = Math.random() * h;
@@ -173,7 +191,7 @@ function FrameWork(){
             } else  {
                 return ppY;
             }
-        }
+        }*/
 
         //genere un échelle aléatoire != 0
         function genereScale(){
@@ -189,14 +207,15 @@ function FrameWork(){
         for(i = 0; i < n; i++){
             let scale = genereScale();      //genere un échelle au hasard
             let posX = Math.floor(genereX(scale));       //position x
-            let posY = Math.floor(genereY(scale));       //position y
+            //let posY = Math.floor(genereY(scale));       //position y
             let vitX = Math.floor(Math.random() * 6 - 12);
-            let vitY = Math.floor(Math.random() * 6 - 12);
-            let s = new Soucoupe(posX, posY, vitX, vitY, scale);
+            let vitY = Math.floor(Math.random());
+            let s = new Soucoupe(posX, -50, vitX, 1, scale);
             tabObjectSoucoupe.push(s);
         }
 
     }
+
 
 
     //modifier la variable vitesse
@@ -238,11 +257,7 @@ function FrameWork(){
         createSoucoupe,
         getSpeedSoucoupe,
         setVitesse,
-        getPosXCanvas,
-        getPosYCanvas,
-        getPosXScroll,
-        getPosYScroll,
-        checkObject
+        moveLanceur
 
     }
 }
