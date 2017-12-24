@@ -1,16 +1,5 @@
 //fait tomber la soucoupe si on a cliqué dessus
-function downSoucoupe(xMouse, yMouse){
-    tabObjectSoucoupe.forEach(function(s){
-        if(xMouse >= s.x - 50 && xMouse <= s.x + 50 && yMouse >= s.y - 50 && yMouse <= s.y + 50){
-            if (s.touch){
-                s.touch = false;
-                s.rotation = 0;
-            } else {
-                s.touch = true;
-            }
-        }
-    });
-}
+
 
 
 //augmente la vitesse des soucoupe en fonction du slider
@@ -73,6 +62,12 @@ function getSpeedRange(speedM) {
     fw.setVitesse(speedM);
     fw.moreSpeed(newVitesse);
     document.querySelector("#rVitesseS").innerHTML = speedM;
+}
+
+
+//modifier la variable vitesse
+function setVitesse(newSpeed){
+    speedSoucoupe = newSpeed;
 }
 
 

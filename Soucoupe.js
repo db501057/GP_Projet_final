@@ -9,23 +9,26 @@ class Soucoupe extends ObjetGraphique {
         this.touch = false;
         this.colorC = "lightblue";
         this.rotation = 0;
+        this.drawTF = true;
     }
 
     draw(ctx) {
-        ctx.save();
-        ctx.translate(this.x, this.y);
+        if (this.drawTF) {
+            ctx.save();
+            ctx.translate(this.x, this.y);
 
-        ctx.scale(this.scale, this.scale);
-        ctx.rotate(this.rotation);
-        this.soute(ctx);
-        ctx.strokeStyle = "darkslategray";
-        ctx.fillStyle = "darkslategray";
-        ctx.beginPath();
-        ctx.ellipse(0, 0, 20, 100, Math.PI / 2, 0, Math.PI * 2, 0);
-        ctx.fill();
-        ctx.stroke();
-        this.cabine(ctx);
-        ctx.restore();
+            ctx.scale(this.scale, this.scale);
+            ctx.rotate(this.rotation);
+            this.soute(ctx);
+            ctx.strokeStyle = "darkslategray";
+            ctx.fillStyle = "darkslategray";
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 20, 100, Math.PI / 2, 0, Math.PI * 2, 0);
+            ctx.fill();
+            ctx.stroke();
+            this.cabine(ctx);
+            ctx.restore();
+        }
     }
 
     cabine(ctx) {
@@ -110,7 +113,10 @@ class Soucoupe extends ObjetGraphique {
             //colision en y
             if (this.y > h - this.scale * 70){
                 this.y = h - this.scale * 70;
-                return true;
+                if(this.drawTF){
+                    return true;
+                }
+
             }
 
 
