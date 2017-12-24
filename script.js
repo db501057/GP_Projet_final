@@ -21,13 +21,13 @@ function getPrenom(prenomS){
 
 setInterval(function () {
     if(facile){
-        fw.createSoucoupe(2)
+        fw.createSoucoupe(1)
     }
     if(intermediare){
-        fw.createSoucoupe(7);
+        fw.createSoucoupe(4);
     }
     if(difficile){
-        fw.createSoucoupe(13);
+        fw.createSoucoupe(7);
     }
 }, 2000);
 
@@ -64,10 +64,11 @@ function FrameWork(){
 
     function mouseClick(){
         tabObjectSoucoupe.forEach(function (s) {
-            if((s.x > xMouse - 100 * s.getScale() && s.x < xMouse + 100 *s.getScale()) && (s.y > yMouse - 70*s.getScale() && s.y > yMouse + 70*s.getScale())){
-                cmp++;
-                s.drawTF = false;
-            }
+                if ((s.x > xMouse - 100 * s.getScale() && s.x < xMouse + 100 * s.getScale()) && (s.y > yMouse - 70 * s.getScale() && s.y > yMouse + 70 * s.getScale())) {
+                    cmp++;
+                    console.log(cmp);
+                    s.drawTF = false;
+                }
         })
     }
 
@@ -102,20 +103,13 @@ function FrameWork(){
 
         if(lose) {
 
-            tabObjectSoucoupe.forEach(function (s) {
-                s.draw(ctx);
-            });
-
             ctx.font = "40pt Monaco";
             ctx.lineWidth = 3;
             ctx.strokeStyle = "blue";
             ctx.fillStyle = "yellow";
             ctx.fillText("Vous avez perdu", w2 - 200, h2 + 50);
 
-        }
-
-
-        if (start) {
+        } else if (start) {
 
             //facile
             if((xMouse > 60 && xMouse < 200) && (yMouse > 240 && yMouse < 270)){
@@ -176,12 +170,10 @@ function FrameWork(){
                 s.draw(ctx);
                 s.move(ctx);
                 colission = s.tryColision(w, h);
+                if (colission){
+                    lose = true;
+                }
             });
-
-
-            if(colission){
-                lose = true;
-            }
         }
 
         requestAnimationFrame(animeCanvas);
@@ -223,7 +215,7 @@ function FrameWork(){
         function genereScale(){
             let ps = Math.random() * 0.7;
             if (ps === 0){
-                return ps + 0.1
+                return ps + 0.3
             } else {
                 return ps;
             }
