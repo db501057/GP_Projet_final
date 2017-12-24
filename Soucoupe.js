@@ -16,7 +16,6 @@ class Soucoupe extends ObjetGraphique {
         if (this.drawTF) {
             ctx.save();
             ctx.translate(this.x, this.y);
-
             ctx.scale(this.scale, this.scale);
             ctx.rotate(this.rotation);
             this.soute(ctx);
@@ -118,6 +117,11 @@ class Soucoupe extends ObjetGraphique {
                 }
 
             }
+        }
+
+
+    getScale(){
+        return this.scale;
 
 
         /* else if (this.y >= h - this.scale * 40) {

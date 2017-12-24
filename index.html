@@ -15,7 +15,10 @@
 <script src="Lanceur.js"></script>
 <script src="Missille.js"></script>
 
+<h2 id="tir" style="text-align: center"></h2>
+
 <div id="world">
+
 
     <div id="canvasDiv"><canvas id="canvas" width=950 height="600" onclick="getMouse(event)"></canvas></div>
 <!--
@@ -64,7 +67,16 @@
 
     </div>
     -->
+
+
 </div>
+
+
+<form>
+    <label for="prenon">Prénom</label>
+    <input type="text" id="prenon" onchange="getPrenom(this.value)">
+</form>
+
 <h1>Benjamin Dekeyser L3 Miage UNS</h1>
 
 

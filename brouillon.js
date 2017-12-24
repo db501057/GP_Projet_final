@@ -149,6 +149,17 @@ function clearTabE(){
     tabObjectExtraterrestre = [];
 }
 
+
+window.addEventListener('keydown', function (event) {
+    if(event.keyCode == 37){
+        fw.moveLanceur(37);
+    } else if (event.keyCode === 39){
+        fw.moveLanceur(39);
+    } else if(event.keyCode == 32){
+        fw.createMissille();
+    }
+});
+
 //change la couleur du chapeau
 function changeColorChap() {
     tabObjectExtraterrestre.forEach(function (e){
@@ -159,4 +170,13 @@ function changeColorChap() {
         }
     });
 }
+
+
+&& (yMouse >= s.y && yMouse <= s.y)
+
+
+//deplace le lanceur de missille
+function moveLanceur(key) {
+    lanceur.move(key);
+};
 

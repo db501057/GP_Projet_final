@@ -4,22 +4,19 @@ window.onload = init;
 let fw;
 var xMouse, yMouse;
 let facile, intermediare, difficile;
+let cmp = 0;
+let prenom = "";
 
-window.addEventListener('keydown', function (event) {
-    if(event.keyCode == 37){
-        fw.moveLanceur(37);
-    } else if (event.keyCode === 39){
-        fw.moveLanceur(39);
-    } else if(event.keyCode == 32){
-        fw.createMissille();
-    }
-});
 
 //recupère la position su clique de la souris
 function getMouse(event) {
      xMouse = event.clientX - fw.getPosXCanvas() + fw.getPosXScroll();
      yMouse = event.clientY - fw.getPosYCanvas() + fw.getPosYScroll();
      fw.mouseClick();
+}
+
+function getPrenom(prenomS){
+    prenom = prenomS;
 }
 
 setInterval(function () {
@@ -45,11 +42,12 @@ function FrameWork(){
     let h, w;     //les dimension du canvas
     let tabObjectExtraterrestre = [];     //tableau avec tous les objets du canvas
     let tabObjectSoucoupe = [];
-    let tabObjectMissille = [];
     var imageObj = new Image();
     let lanceur = new Lanceur(10, 550);
     let lose = false;
     let start = true;
+    let span = document.querySelector('#tir');
+    let colission = false;
 
 
     imageObj.src = 'fond.jpg';
@@ -66,17 +64,13 @@ function FrameWork(){
 
     function mouseClick(){
         tabObjectSoucoupe.forEach(function (s) {
-            if((xMouse > s.x - 100 * s.scale && xMouse < s.x + 100 * s.scale) && (yMouse >= s.y && yMouse <= s.y)){
-                console.log('ok');
+            if((s.x > xMouse - 100 * s.getScale() && s.x < xMouse + 100 *s.getScale()) && (s.y > yMouse - 70*s.getScale() && s.y > yMouse + 70*s.getScale())){
+                cmp++;
                 s.drawTF = false;
             }
         })
     }
 
-    //deplace le lanceur de missille
-    function moveLanceur(key) {
-        lanceur.move(key);
-    };
 
     //renvoie la valeur de la vitesse des soucoupe précédente
     function getSpeedSoucoupe(){
@@ -91,6 +85,10 @@ function FrameWork(){
 
     //animation
     function animeCanvas(){
+
+        if(prenom != "") {
+            span.innerHTML = prenom;
+        }
 
         getDimCanavs();      //on verifie les dimension du canvas
         ctx.clearRect(0, 0, w, h);
@@ -122,19 +120,19 @@ function FrameWork(){
             //facile
             if((xMouse > 60 && xMouse < 200) && (yMouse > 240 && yMouse < 270)){
                 start = false;
-                facile = setInterval(createSoucoupe(1), 1000);
+                facile = true;
             }
 
             //intermédiare
             if((xMouse > 340 && xMouse < 640) && (yMouse > 240 && yMouse < 270)){
                 start = false;
-                intermediare = setInterval(createSoucoupe(1), 50);
+                intermediare = true;
             }
 
             //dificile
             if((xMouse > 720 && xMouse < 950) && (yMouse > 240 && yMouse < 270)){
                 start = false;
-                difficile = setInterval(createSoucoupe(1), 25);
+                difficile = true;
             }
 
             ctx.font = "60pt Monaco";
@@ -173,8 +171,6 @@ function FrameWork(){
                 r.rotationBras();
             });
 
-            let colission = false;
-
             //dessine les soucoupes volantes
             tabObjectSoucoupe.forEach(function (s) {
                 s.draw(ctx);
@@ -182,7 +178,6 @@ function FrameWork(){
                 colission = s.tryColision(w, h);
             });
 
-            console.log(colission);
 
             if(colission){
                 lose = true;
@@ -273,13 +268,9 @@ function FrameWork(){
     /*Black box model*/
     return {
         init,
-        clearTabE,
         clearTabS,
-        createExtraterreste,
         createSoucoupe,
         getSpeedSoucoupe,
-        moveLanceur,
-        createMissille,
         getPosYScroll,
         getPosXScroll,
         getPosYCanvas,
