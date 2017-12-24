@@ -2,6 +2,7 @@
 window.onload = init;
 
 let fw;
+var xMouse, yMouse;
 
 window.addEventListener('keydown', function (event) {
     if(event.keyCode == 37){
@@ -15,9 +16,9 @@ window.addEventListener('keydown', function (event) {
 
 //recupère la position su clique de la souris
 function getMouse(event) {
-    let xMouse = event.clientX - fw.getPosXCanvas() + fw.getPosXScroll();
-    let yMouse = event.clientY - fw.getPosYCanvas() + fw.getPosYScroll();
-    return [xMouse, yMouse];
+     xMouse = event.clientX - fw.getPosXCanvas() + fw.getPosXScroll();
+     yMouse = event.clientY - fw.getPosYCanvas() + fw.getPosYScroll();
+     console.log(xMouse, yMouse);
 }
 
 
@@ -39,7 +40,6 @@ function FrameWork(){
     let lose = false;
     let start = true;
 
-    let t = new Missille(100, 100);
     imageObj.src = 'fond.jpg';
 
     function init(){
@@ -47,16 +47,13 @@ function FrameWork(){
         ctx = canvas.getContext("2d");
         getDimCanavs();     //recuperation des dimension du canvas
 
-        //animation du canvas
-       // setInterval(changeColorChap, 10);       //changement de la couleur du chapeau de l'extraterrestre
-       // setInterval(colorBrakeSoucoupe, 3);     //chnagem la couleur de la cabine de la soucoupe quand on clique dessus
         requestAnimationFrame(animeCanvas);
     }
 
     //deplace le lanceur de missille
     function moveLanceur(key) {
         lanceur.move(key);
-    }
+    };
 
     //renvoie la valeur de la vitesse des soucoupe précédente
     function getSpeedSoucoupe(){
@@ -81,9 +78,7 @@ function FrameWork(){
         let w2 = w/2;
 
 
-        if(lose){
-
-
+        if(lose) {
 
             tabObjectSoucoupe.forEach(function (s) {
                 s.draw(ctx);
@@ -95,7 +90,14 @@ function FrameWork(){
             ctx.fillStyle = "yellow";
             ctx.fillText("Vous avez perdu", w2, h2 + 50);
 
-        } else if (start) {
+        }
+
+
+        if (start) {
+
+            if((xMouse > 60 && xMouse < 200) && (yMouse > 240 && yMouse < 270)){
+                start = false;
+            }
 
             ctx.font = "60pt Monaco";
             ctx.lineWidth = 3;
@@ -123,14 +125,6 @@ function FrameWork(){
             ctx.fillStyle = "blue";
             ctx.fillText("Difficile", w3*2 + 50, 400);
 
-            let res = getMouse();
-
-            let xmouse = res[0];
-            let ymouse = res[1];
-
-            if(xmouse > 50 && xmouse < 150){
-                start = false;
-            }
 
         } else {
 
