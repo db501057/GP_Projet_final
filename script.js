@@ -8,6 +8,8 @@ window.addEventListener('keydown', function (event) {
         fw.moveLanceur(37);
     } else if (event.keyCode === 39){
         fw.moveLanceur(39);
+    } else if(event.keyCode == 32){
+        fw.createMissille();
     }
 });
 
@@ -31,8 +33,11 @@ function FrameWork(){
     let h, w;     //les dimension du canvas
     let tabObjectExtraterrestre = [];     //tableau avec tous les objets du canvas
     let tabObjectSoucoupe = [];
+    let tabObjectMissille = [];
     var imageObj = new Image();
     let lanceur = new Lanceur(10, 550);
+
+    let t = new Missille(100, 100);
     imageObj.src = 'fond.jpg';
 
     function init(){
@@ -40,17 +45,14 @@ function FrameWork(){
         ctx = canvas.getContext("2d");
         getDimCanavs();     //recuperation des dimension du canvas
 
-        createSoucoupe(1);
-
         //animation du canvas
        // setInterval(changeColorChap, 10);       //changement de la couleur du chapeau de l'extraterrestre
        // setInterval(colorBrakeSoucoupe, 3);     //chnagem la couleur de la cabine de la soucoupe quand on clique dessus
         
         requestAnimationFrame(animeCanvas);
-
     }
 
-
+    //deplace le lanceur de missille
     function moveLanceur(key) {
         lanceur.move(key);
     }
@@ -73,8 +75,12 @@ function FrameWork(){
 
         ctx.drawImage(imageObj, 0, 0, w, h);
 
-        lanceur.draw(ctx);
+        tabObjectMissille.forEach(function (m) {
+            m.draw(ctx);
+            m.move();
+        })
 
+        lanceur.draw(ctx);
 
         tabObjectExtraterrestre.forEach(function(r){
             r.draw(ctx);
@@ -217,6 +223,15 @@ function FrameWork(){
     }
 
 
+    /*creer les missile lancer*/
+    function createMissille(){
+        let posX = lanceur.x + 7.5;
+        let posY = lanceur.y;
+        let missille = new Missille(posX, posY);
+        tabObjectMissille.push(missille);
+    }
+
+
 
     //modifier la variable vitesse
     function setVitesse(newSpeed){
@@ -257,7 +272,7 @@ function FrameWork(){
         createSoucoupe,
         getSpeedSoucoupe,
         setVitesse,
-        moveLanceur
-
+        moveLanceur,
+        createMissille
     }
 }
